@@ -96,9 +96,11 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         double query_h = requestParams.get("h");
 
         // exception case
-        if (query_rlon < ROOT_ULLON || query_llon > ROOT_LRLON
-                || query_llat > ROOT_ULLAT || query_ulat < ROOT_LRLAT
+
+        if (query_rlon > ROOT_LRLON || query_llon < ROOT_ULLON
+                || query_llat < ROOT_LRLAT || query_ulat > ROOT_ULLAT
                 || query_w <= 0 || query_h <= 0){
+            System.out.println("exception occur");
             results.put("render_grid", null);
             results.put("raster_ul_lon", null);
             results.put("raster_ul_lat", null);
@@ -170,7 +172,6 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         results.put("raster_lr_lat", ROOT_ULLAT - (y_finish + 1) * (ROOT_ULLAT - ROOT_LRLAT)/Math.pow(2, depth));
         results.put("depth", depth);
         results.put("query_success", true);
-
         return results;
     }
 
